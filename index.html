@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>面接申込フォーム｜たすかるエアコンお掃除専門店</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root{
+        --blue:#00a5d4;
+        --blue-sub:#45b0e3;
+        --blue-deep:#00719c;
+        --pale:#e7f5fe;
+        --ink:#313131;
+        --cta:#f26b1d;
+        --cta-dark:#d9550d;
+        --bg:#f2f9fd;
+        --card:#ffffff;
+        --line:#cfe6f2;
+        --field-line:#bcd7e6;
+        --muted:#5d7180;
+        --error:#c9331f;
+        --error-bg:#fdf0ee;
+        --chip-bg:#ffffff;
+        --header-bg:#ffffff;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --pale:#12303f;
+          --ink:#e9f2f6;
+          --bg:#0d1a21;
+          --card:#15262f;
+          --line:#274b5e;
+          --field-line:#33586c;
+          --muted:#9db4c0;
+          --error:#ff9a8a;
+          --error-bg:#3a201c;
+          --chip-bg:#15262f;
+          --header-bg:#ffffff;
+          color-scheme: dark;
+        }
+      }
+      *{ box-sizing:border-box; }
+      html{ -webkit-text-size-adjust:100%; }
+      body{
+        margin:0;
+        background:var(--bg);
+        color:var(--ink);
+        font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,"Segoe UI",sans-serif;
+        font-size:16px;
+        line-height:1.7;
+      }
+      .wrap{ max-width:680px; margin:0 auto; padding:0 16px; }
+
+      /* ---------- ヘッダー ---------- */
+      header.site{
+        background:var(--header-bg);
+        border-bottom:3px solid var(--blue);
+      }
+      header.site .wrap{
+        display:flex; align-items:center; justify-content:space-between;
+        gap:12px; padding-top:10px; padding-bottom:10px;
+      }
+      header.site img.logo{ height:38px; width:auto; display:block; }
+      .header-tag{
+        flex:none; font-size:12px; font-weight:700; color:var(--blue-deep);
+        background:var(--pale); border:1px solid var(--blue-sub);
+        padding:4px 10px; border-radius:999px; white-space:nowrap;
+      }
+      @media (prefers-color-scheme: dark){
+        .header-tag{ background:#e7f5fe; }
+      }
+
+      /* ---------- 導入 ---------- */
+      .intro{
+        background:linear-gradient(180deg, var(--pale), var(--bg));
+        padding:28px 0 8px;
+      }
+      .intro h1{
+        margin:0 0 6px; font-size:30px; font-weight:900; letter-spacing:.02em;
+        line-height:1.35;
+      }
+      .intro .biz{ margin:0 0 14px; font-size:14px; font-weight:700; color:var(--blue-deep); }
+      @media (prefers-color-scheme: dark){ .intro .biz{ color:var(--blue-sub); } }
+      .intro .lead{ margin:0; font-size:15.5px; }
+      .intro .lead strong{ color:var(--blue-deep); }
+      @media (prefers-color-scheme: dark){ .intro .lead strong{ color:var(--blue-sub); } }
+      .merits{
+        display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 4px; padding:0; list-style:none;
+      }
+      .merits li{
+        display:inline-flex; align-items:center; gap:6px;
+        background:var(--card); border:1px solid var(--line); border-radius:999px;
+        padding:6px 12px; font-size:13.5px; font-weight:700;
+      }
+      .merits svg{ width:16px; height:16px; flex:none; }
+      .merits svg path, .merits svg circle{ stroke:var(--blue); }
+
+      /* 流れ（簡易） */
+      .flow-mini{
+        display:flex; align-items:flex-start; margin:20px 0 6px; padding:0; list-style:none;
+      }
+      .flow-mini li{ flex:1; text-align:center; position:relative; }
+      .flow-mini li::before{
+        content:""; position:absolute; top:15px; left:-50%; width:100%; height:2px;
+        background:var(--line); z-index:0;
+      }
+      .flow-mini li:first-child::before{ display:none; }
+      .flow-mini .num{
+        position:relative; z-index:1; display:inline-flex; align-items:center; justify-content:center;
+        width:30px; height:30px; border-radius:50%;
+        background:var(--blue); color:#fff; font-weight:900; font-size:14px;
+      }
+      .flow-mini .lbl{ display:block; margin-top:6px; font-size:11.5px; font-weight:700; line-height:1.4; }
+
+      /* ---------- フォーム ---------- */
+      main{ padding:14px 0 40px; }
+      form.card{
+        background:var(--card); border:1px solid var(--line); border-radius:14px;
+        padding:24px 20px 28px; box-shadow:0 6px 24px rgba(0,90,130,.07);
+      }
+      @media (min-width:560px){ form.card{ padding:32px 32px 36px; } }
+      .field{ margin:0 0 26px; }
+      .field:last-of-type{ margin-bottom:8px; }
+      fieldset.field{ border:0; padding:0; }
+      .flabel, legend.flabel{
+        display:flex; align-items:center; gap:8px;
+        font-size:16px; font-weight:700; margin:0 0 10px; padding:0;
+      }
+      .req{
+        flex:none; font-size:11px; font-weight:700; color:#fff; background:#d84a2b;
+        border-radius:4px; padding:2px 7px; line-height:1.5;
+      }
+      .opt{
+        flex:none; font-size:11px; font-weight:700; color:var(--muted);
+        border:1px solid var(--field-line); border-radius:4px; padding:2px 7px; line-height:1.5;
+      }
+      .hint{ margin:6px 0 0; font-size:13px; color:var(--muted); }
+      input[type="text"], input[type="tel"], input[type="email"], select, textarea{
+        width:100%; font:inherit; font-size:16px; color:var(--ink);
+        background:var(--card); border:1.5px solid var(--field-line); border-radius:10px;
+        padding:13px 14px; appearance:none; -webkit-appearance:none;
+      }
+      textarea{ min-height:110px; resize:vertical; line-height:1.6; }
+      input:focus, select:focus, textarea:focus{
+        outline:none; border-color:var(--blue);
+        box-shadow:0 0 0 3px rgba(0,165,212,.25);
+      }
+      select{
+        padding-right:42px; cursor:pointer;
+        background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="9" viewBox="0 0 14 9"><path d="M1 1l6 6 6-6" fill="none" stroke="%2300a5d4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+        background-repeat:no-repeat; background-position:right 16px center;
+      }
+      select:disabled{ opacity:.55; cursor:not-allowed; }
+      .selects{ display:grid; gap:12px; }
+      @media (min-width:560px){ .selects{ grid-template-columns:1fr 1fr; } }
+      .is-invalid{ border-color:var(--error) !important; }
+      .err{
+        display:none; margin:8px 0 0; font-size:13.5px; font-weight:700; color:var(--error);
+      }
+      .err.show{ display:block; }
+
+      /* ラジオ：チップ */
+      .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+      .chips label{
+        position:relative; display:inline-flex; align-items:center; gap:7px;
+        border:1.5px solid var(--field-line); background:var(--chip-bg); border-radius:999px;
+        padding:10px 16px; font-size:15px; font-weight:500; cursor:pointer; line-height:1.3;
+      }
+      .chips input{
+        appearance:none; -webkit-appearance:none; flex:none; margin:0; cursor:pointer;
+        width:17px; height:17px; border-radius:50%;
+        border:2px solid var(--field-line); background:var(--chip-bg);
+      }
+      .chips input:checked{
+        border-color:var(--blue);
+        background:radial-gradient(circle, var(--blue) 0 4px, var(--chip-bg) 5.5px);
+      }
+      .chips input:focus-visible{ outline:3px solid rgba(0,165,212,.4); outline-offset:2px; }
+      .chips label:has(input:checked){
+        border-color:var(--blue); background:var(--pale); font-weight:700;
+        box-shadow:0 0 0 1px var(--blue) inset;
+      }
+      .chips label:has(input:focus-visible){ box-shadow:0 0 0 3px rgba(0,165,212,.35); }
+      /* ラジオ：縦リスト */
+      .rows{ display:grid; gap:8px; }
+      .rows label{
+        position:relative; display:flex; align-items:center; gap:10px;
+        border:1.5px solid var(--field-line); background:var(--chip-bg); border-radius:10px;
+        padding:13px 14px; font-size:15px; cursor:pointer; line-height:1.45;
+      }
+      .rows input{
+        appearance:none; -webkit-appearance:none; flex:none; margin:0; cursor:pointer;
+        width:19px; height:19px; border-radius:50%;
+        border:2px solid var(--field-line); background:var(--chip-bg);
+      }
+      .rows input:checked{
+        border-color:var(--blue);
+        background:radial-gradient(circle, var(--blue) 0 4.5px, var(--chip-bg) 6px);
+      }
+      .rows input:focus-visible{ outline:3px solid rgba(0,165,212,.4); outline-offset:2px; }
+      .rows label:has(input:checked){
+        border-color:var(--blue); background:var(--pale); font-weight:700;
+        box-shadow:0 0 0 1px var(--blue) inset;
+      }
+      .rows label:has(input:focus-visible){ box-shadow:0 0 0 3px rgba(0,165,212,.35); }
+      .group-invalid{ outline:2px solid var(--error); outline-offset:4px; border-radius:10px; }
+
+      /* 同意 */
+      .agree{
+        display:flex; gap:10px; align-items:flex-start;
+        background:var(--pale); border:1px solid var(--line); border-radius:10px;
+        padding:14px; cursor:pointer;
+      }
+      .agree input{
+        width:22px; height:22px; flex:none; margin:2px 0 0; accent-color:var(--blue); cursor:pointer;
+      }
+      .agree .ttl{ font-weight:700; font-size:15px; display:block; }
+      .agree .sub{ font-size:13px; color:var(--muted); display:block; margin-top:2px; }
+      @media (prefers-color-scheme: dark){ .agree .sub{ color:var(--ink); opacity:.75; } }
+      .agree-invalid{ outline:2px solid var(--error); outline-offset:2px; }
+
+      /* エラーまとめ */
+      .err-summary{
+        display:none; background:var(--error-bg); border:1.5px solid var(--error);
+        border-radius:10px; padding:14px 16px; margin:0 0 22px;
+      }
+      .err-summary.show{ display:block; }
+      .err-summary p{ margin:0 0 6px; font-weight:900; color:var(--error); font-size:15px; }
+      .err-summary ul{ margin:0; padding-left:20px; }
+      .err-summary li{ font-size:14px; margin:2px 0; }
+      .err-summary button{
+        font:inherit; font-size:14px; background:none; border:0; padding:0; cursor:pointer;
+        color:inherit; text-align:left; text-decoration:underline;
+      }
+
+      /* 送信ボタン */
+      .submit-btn{
+        display:flex; align-items:center; justify-content:center; gap:10px;
+        width:100%; border:0; border-radius:12px; cursor:pointer;
+        background:var(--cta); color:#fff; font:inherit; font-size:18px; font-weight:900;
+        padding:17px 16px; margin-top:26px; letter-spacing:.02em;
+        box-shadow:0 8px 20px rgba(242,107,29,.35);
+        transition:background .15s ease, transform .05s ease;
+      }
+      .submit-btn:hover{ background:var(--cta-dark); }
+      .submit-btn:active{ transform:scale(.99); }
+      .submit-btn:disabled{ opacity:.65; cursor:wait; }
+      .submit-note{ text-align:center; font-size:13px; color:var(--muted); margin:12px 0 0; }
+      .spinner{
+        width:18px; height:18px; border-radius:50%; flex:none;
+        border:3px solid rgba(255,255,255,.4); border-top-color:#fff;
+        animation:spin .8s linear infinite;
+      }
+      @keyframes spin{ to{ transform:rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce){
+        .spinner{ animation:none; }
+        .submit-btn{ transition:none; }
+      }
+
+      /* ---------- 完了画面 ---------- */
+      .complete{ display:none; }
+      .complete.show{ display:block; }
+      .complete-card{
+        background:var(--card); border:1px solid var(--line); border-radius:14px;
+        padding:34px 22px 30px; text-align:center;
+        box-shadow:0 6px 24px rgba(0,90,130,.07);
+      }
+      @media (min-width:560px){ .complete-card{ padding:44px 36px 38px; } }
+      .check-circle{
+        width:76px; height:76px; margin:0 auto 18px; border-radius:50%;
+        background:var(--pale); border:2px solid var(--blue);
+        display:flex; align-items:center; justify-content:center;
+      }
+      .check-circle svg{ width:38px; height:38px; }
+      .check-circle svg path{ stroke:var(--blue); }
+      .complete h2{ margin:0 0 10px; font-size:24px; font-weight:900; line-height:1.45; }
+      .complete .thanks{ margin:0 auto; max-width:520px; font-size:15.5px; text-align:left; }
+      .receipt{
+        margin:24px auto 0; max-width:520px; text-align:left;
+        border:1px solid var(--line); border-radius:10px; overflow:hidden;
+      }
+      .receipt h3{
+        margin:0; padding:10px 14px; font-size:13.5px; font-weight:700;
+        background:var(--pale); border-bottom:1px solid var(--line);
+      }
+      .receipt dl{ margin:0; }
+      .receipt .row{
+        display:flex; gap:12px; padding:10px 14px; font-size:14.5px;
+        border-bottom:1px solid var(--line);
+      }
+      .receipt .row:last-child{ border-bottom:0; }
+      .receipt dt{ flex:none; width:96px; font-weight:700; color:var(--muted); }
+      .receipt dd{ margin:0; word-break:break-all; }
+      .next{ margin:30px auto 0; max-width:520px; text-align:left; }
+      .next h3{ margin:0 0 14px; font-size:18px; font-weight:900; }
+      .next ol{ margin:0; padding:0; list-style:none; display:grid; gap:10px; }
+      .next li{
+        display:flex; gap:12px; align-items:flex-start;
+        border:1px solid var(--line); border-radius:10px; padding:13px 14px;
+        background:var(--card);
+      }
+      .next .n{
+        flex:none; width:28px; height:28px; border-radius:50%; margin-top:1px;
+        background:var(--blue); color:#fff; font-weight:900; font-size:14px;
+        display:inline-flex; align-items:center; justify-content:center;
+      }
+      .next .t{ font-weight:700; font-size:15.5px; display:block; }
+      .next .d{ font-size:13.5px; color:var(--muted); display:block; margin-top:1px; }
+      .back-link{
+        display:inline-block; margin-top:26px; font-size:14px; color:var(--blue-deep);
+        background:none; border:0; cursor:pointer; text-decoration:underline; font:inherit;
+      }
+      @media (prefers-color-scheme: dark){ .back-link{ color:var(--blue-sub); } }
+
+      /* ---------- フッター ---------- */
+      footer.site{
+        background:var(--blue-deep); color:#eaf6fc; margin-top:44px;
+        padding:28px 0 calc(28px + env(safe-area-inset-bottom));
+      }
+      footer.site .bizname{ font-weight:900; font-size:16px; margin:0 0 4px; color:#fff; }
+      footer.site p{ margin:0; font-size:13.5px; }
+    </style>
+  </head>
+  <body>
+    <header class="site">
+      <div class="wrap">
+        <img class="logo" src="data:image/png;base64,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" alt="たすかるエアコンお掃除専門店" width="400" height="113" />
+        <span class="header-tag">業務委託スタッフ募集</span>
+      </div>
+    </header>
+
+    <section class="intro">
+      <div class="wrap">
+        <h1>面接申込フォーム</h1>
+        <p class="biz">たすかるエアコンお掃除専門店｜業務委託スタッフ（エアコンクリーニング）</p>
+        <p class="lead">
+          入力は<strong>1分ほど</strong>で終わります。送信後、担当者からZoom面接の日程調整のご連絡をします。応募したからといって契約になるわけではありません。まずは話を聞いてから決められます。
+        </p>
+        <ul class="merits">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke-width="2"/><path d="M12 7v5l3.5 2" stroke-width="2" stroke-linecap="round"/></svg>
+            入力は約1分
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.4-7 10-4-1.6-7-5.5-7-10V6l7-3z" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2.2 2.2L15.4 10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            費用はかかりません
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6a3 3 0 013-3h10a3 3 0 013 3v7a3 3 0 01-3 3H9l-5 4V6z" stroke-width="2" stroke-linejoin="round"/></svg>
+            話を聞くだけでもOK
+          </li>
+        </ul>
+        <ol class="flow-mini" aria-label="申込後の流れ">
+          <li><span class="num">1</span><span class="lbl">このフォーム<br />で申込</span></li>
+          <li><span class="num">2</span><span class="lbl">担当者から<br />ご連絡</span></li>
+          <li><span class="num">3</span><span class="lbl">Zoom面接<br />（日程調整）</span></li>
+          <li><span class="num">4</span><span class="lbl">契約・研修<br />スタート</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <main class="wrap">
+      <!-- ============ 入力画面 ============ -->
+      <div id="formView">
+        <form class="card" id="applyForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <input type="hidden" name="access_key" value="6839537f-b622-4225-be29-e025e3cf1e50" />
+          <input type="hidden" name="subject" id="f-subject" value="" />
+          <input type="hidden" name="from_name" value="たすかる 面接申込フォーム" />
+          <input type="hidden" name="botcheck" value="false" />
+          <input type="hidden" name="redirect" value="https://tasukarutaoka-cpu.github.io/tasukaru-form/?sent=1" />
+          <div class="err-summary" id="errSummary" role="alert">
+            <p>入力内容をご確認ください</p>
+            <ul id="errSummaryList"></ul>
+          </div>
+
+          <div class="field">
+            <label class="flabel" for="f-name">お名前 <span class="req">必須</span></label>
+            <input type="text" id="f-name" name="お名前" autocomplete="name" placeholder="例）田中 太郎" />
+            <p class="err" id="err-name"></p>
+          </div>
+
+          <div class="field">
+            <label class="flabel" for="f-phone">電話番号 <span class="req">必須</span></label>
+            <input type="tel" id="f-phone" name="電話番号" autocomplete="tel" inputmode="tel" placeholder="例）09012345678" />
+            <p class="hint">ハイフンなしでも入力できます。担当者からのご連絡に使います。</p>
+            <p class="err" id="err-phone"></p>
+          </div>
+
+          <div class="field">
+            <label class="flabel" for="f-email">メールアドレス <span class="req">必須</span></label>
+            <input type="email" id="f-email" name="email" autocomplete="email" inputmode="email" placeholder="例）example@mail.jp" />
+            <p class="err" id="err-email"></p>
+          </div>
+
+          <fieldset class="field">
+            <legend class="flabel">希望エリア <span class="req">必須</span></legend>
+            <div class="selects">
+              <div>
+                <select id="f-pref" name="希望エリア（都道府県）" aria-label="都道府県">
+                  <option value="">都道府県を選択</option>
+                </select>
+                <p class="err" id="err-pref"></p>
+              </div>
+              <div>
+                <select id="f-city" name="希望エリア（市区町村）" aria-label="市区町村" disabled>
+                  <option value="">市区町村を選択</option>
+                </select>
+                <p class="hint" id="cityHint">先に都道府県を選んでください。</p>
+                <p class="err" id="err-city"></p>
+              </div>
+            </div>
+            <p class="hint">お住まいの地域、または活動したい地域を選んでください（車で60分圏内が活動範囲の目安です）。</p>
+          </fieldset>
+
+          <fieldset class="field" id="grp-age">
+            <legend class="flabel">年代 <span class="req">必須</span></legend>
+            <div class="chips" role="radiogroup" aria-label="年代">
+              <label><input type="radio" name="年代" value="20代" />20代</label>
+              <label><input type="radio" name="年代" value="30代" />30代</label>
+              <label><input type="radio" name="年代" value="40代" />40代</label>
+              <label><input type="radio" name="年代" value="50代" />50代</label>
+              <label><input type="radio" name="年代" value="60代以上" />60代以上</label>
+            </div>
+            <p class="err" id="err-age"></p>
+          </fieldset>
+
+          <fieldset class="field" id="grp-status">
+            <legend class="flabel">現在の状況 <span class="req">必須</span></legend>
+            <div class="rows" role="radiogroup" aria-label="現在の状況">
+              <label><input type="radio" name="現在の状況" value="会社員" />会社員</label>
+              <label><input type="radio" name="現在の状況" value="自営業・フリーランス" />自営業・フリーランス</label>
+              <label><input type="radio" name="現在の状況" value="パート・アルバイト" />パート・アルバイト</label>
+              <label><input type="radio" name="現在の状況" value="求職中" />求職中</label>
+              <label><input type="radio" name="現在の状況" value="その他" />その他</label>
+            </div>
+            <p class="err" id="err-status"></p>
+          </fieldset>
+
+          <fieldset class="field" id="grp-car">
+            <legend class="flabel">車について <span class="opt">任意</span></legend>
+            <div class="rows" role="radiogroup" aria-label="車について">
+              <label><input type="radio" name="車について" value="軽自動車がある" />軽自動車がある</label>
+              <label><input type="radio" name="車について" value="車はない（リース・購入を相談したい）" />車はない（リース・購入を相談したい）</label>
+              <label><input type="radio" name="車について" value="普通車ならある" />普通車ならある</label>
+            </div>
+            <p class="hint">現場へは車での移動が基本です。車がない場合も、格安リースや仕入れ業者の紹介がありますのでご相談ください。</p>
+          </fieldset>
+
+          <div class="field">
+            <label class="flabel" for="f-message">質問・メッセージ <span class="opt">任意</span></label>
+            <textarea id="f-message" name="質問・メッセージ" placeholder="気になることがあれば何でもどうぞ。未経験の不安、収入のこと、研修のことなど"></textarea>
+          </div>
+
+          <div class="field">
+            <label class="agree" id="agreeBox">
+              <input type="checkbox" id="f-agree" />
+              <span>
+                <span class="ttl">個人情報の取り扱いに同意します <span class="req">必須</span></span>
+                <span class="sub">入力いただいた情報は、応募に関する連絡のみに使用します。</span>
+              </span>
+            </label>
+            <p class="err" id="err-agree"></p>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">この内容で申し込む</button>
+          <p class="submit-note">申込は無料です。送信をもって契約が成立することはありません。</p>
+        </form>
+      </div>
+
+      <!-- ============ 完了画面 ============ -->
+      <div class="complete" id="completeView" aria-live="polite">
+        <div class="complete-card">
+          <div class="check-circle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4.5 12.5l5 5 10-11" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h2 id="completeTitle" tabindex="-1">お申し込みありがとうございます。<br />受け付けました。</h2>
+          <p class="thanks">
+            面接のお申し込みを受け付けました。担当者から、入力いただいた電話番号またはメールアドレス宛に、Zoom面接の日程調整のご連絡をいたします。今しばらくお待ちください。
+          </p>
+
+          <div class="receipt">
+            <h3>お申し込み内容</h3>
+            <dl>
+              <div class="row"><dt>お名前</dt><dd id="rc-name"></dd></div>
+              <div class="row"><dt>希望エリア</dt><dd id="rc-area"></dd></div>
+              <div class="row"><dt>電話番号</dt><dd id="rc-phone"></dd></div>
+              <div class="row"><dt>メール</dt><dd id="rc-email"></dd></div>
+            </dl>
+          </div>
+
+          <div class="next">
+            <h3>今後の流れ</h3>
+            <ol>
+              <li><span class="n">1</span><span><span class="t">担当者からご連絡</span><span class="d">電話またはメールでご連絡します。</span></span></li>
+              <li><span class="n">2</span><span><span class="t">Zoom面接の日程調整</span><span class="d">ご都合のよい日時をうかがい、オンライン面接を設定します。</span></span></li>
+              <li><span class="n">3</span><span><span class="t">面接で詳しい説明と質疑応答</span><span class="d">仕事の内容・収入・研修について説明します。気になることは何でも聞いてください。</span></span></li>
+              <li><span class="n">4</span><span><span class="t">合意すれば契約・研修スタート</span><span class="d">納得いただけた場合のみ、業務委託契約と研修へ進みます。</span></span></li>
+            </ol>
+          </div>
+
+          <button type="button" class="back-link" id="backBtn">入力画面に戻る</button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site">
+      <div class="wrap">
+        <p class="bizname">たすかるエアコンお掃除専門店</p>
+        <p>代表 田岡隆博</p>
+        <p>所在地：兵庫県川西市火打1丁目</p>
+      </div>
+    </footer>
+
+    <script>
+      /* =========================================================
+         希望エリア（採用HP掲載エリア・12都府県 268エリア）
+         ========================================================= */
+      var AREAS = {
+        "東京都": ["千代田区","中央区","文京区","台東区","墨田区","江戸川区","江東区","荒川区","板橋区","足立区","葛飾区","北区","町田市"],
+        "神奈川県": ["横浜市","川崎市","相模原市","平塚市","藤沢市","茅ヶ崎市","秦野市","厚木市","大和市","座間市","綾瀬市","伊勢原市","海老名市","高座郡","愛甲郡"],
+        "埼玉県": ["さいたま市","川越市","熊谷市","川口市","行田市","秩父市","所沢市","飯能市","加須市","草加市","越谷市","本庄市","狭山市","羽生市","鴻巣市","深谷市","上尾市","戸田市","入間市","朝霞市","和光市","新座市","桶川市","久喜市","北本市","八潮市","三郷市","蓮田市","坂戸市","幸手市","日高市","吉川市","白岡市","ふじみ野市","鶴ヶ島市","東松山市","春日部市","北足立郡","南埼玉郡","北葛飾郡","比企郡","秩父郡","児玉郡","大里郡","入間郡"],
+        "千葉県": ["千葉市","市川市","船橋市","松戸市","浦安市","茂原市","佐倉市","東金市","山武市","市原市","八街市","印西市","白井市","富里市","匝瑳市","旭市","いすみ市","野田市","流山市","銚子市","鴨川市","館山市","富津市","成田市","香取市","柏市","君津市","勝浦市","印旛郡","八千代市","鎌ヶ谷市","木更津市","袖ヶ浦市","南房総市","四街道市","習志野市","大網白里市","山武郡","長生郡","夷隅郡","我孫子市"],
+        "大阪府": ["大阪市","豊中市","池田市","吹田市","高槻市","守口市","枚方市","茨木市","大東市","箕面市","寝屋川市","東大阪市","四條畷市","岸和田市","門真市","摂津市","交野市","三島郡","豊能郡","貝塚市","八尾市","松原市","和泉市","高石市","富田林市","河内長野市","泉佐野市","柏原市","羽曳野市","藤井寺市","泉大津市","南河内郡","泉南市","泉北郡","泉南郡","阪南市","堺市","大阪狭山市"],
+        "京都府": ["京都市","向日市","宇治市","亀岡市","城陽市","八幡市","南丹市","綾部市","乙訓郡","久世郡","船井郡","長岡京市","京田辺市","福知山市"],
+        "兵庫県": ["尼崎市","西宮市","芦屋市","伊丹市","宝塚市","川西市","三田市","丹波市","西脇市","丹波篠山市","川辺郡","神戸市","加東市","小野市","稲美郡","明石市","三木市"],
+        "奈良県": ["奈良市","天理市","大和高田市","大和郡山市","橿原市","桜井市","五條市","御所市","生駒市","香芝市","葛城市","生駒郡","磯城郡","北葛城郡"],
+        "和歌山県": ["和歌山市","橋本市","岩出市","海南市","海草郡","伊都郡"],
+        "愛知県": ["名古屋市","北名古屋市","岡崎市","みよし市","西尾市","常滑市","大府市","知立市","高浜市","田原市","日進市","刈谷市","一宮市","豊川市","豊橋市","豊明市"],
+        "岐阜県": ["岐阜市","美濃市","瑞浪市","恵那市","土岐市","美濃加茂市","各務原市","多治見市","可児市","中津川市"],
+        "福岡県": ["北九州市","久留米市","大牟田市","筑紫野市","春日市","福岡市","飯塚市","田川市","柳川市","直方市","豊前市","筑後市","大川市","行橋市","中間市","小郡市","宗像市","古賀市","宮若市","大野城市","太宰府市","那珂川市","うきは市","福津市","嘉麻市","朝倉市","糸島市","糟屋郡","遠賀郡","鞍手郡","嘉穂郡","朝倉郡","三井郡","三潴郡","八女郡","田川郡","京都郡","築上郡","みやま市"]
+      };
+
+      /* =========================================================
+         送信処理：通常のHTMLフォームPOST（ページ遷移型）
+         ---------------------------------------------------------
+         フォームは https://api.web3forms.com/submit へ POST し、
+         Web3Forms 経由で tasukaru.taoka@gmail.com へ届きます。
+         送信後は hidden の redirect（このページの ?sent=1 付きURL）
+         へ戻り、読み込み時に完了画面を表示します。
+         バリデーションでエラーがある場合は送信を止め、その場に
+         エラーを表示します。
+         ========================================================= */
+      (function () {
+        var form = document.getElementById("applyForm");
+
+        /* 送信後のリダイレクト（?sent=1）では、フォームの代わりに完了画面を表示する。
+           送信内容は手元に残らないため、受付内容の明細は表示しない。 */
+        if (new URLSearchParams(window.location.search).get("sent") === "1") {
+          document.getElementById("formView").style.display = "none";
+          document.getElementById("completeView").classList.add("show");
+          var receipt = document.querySelector(".receipt");
+          if (receipt) receipt.style.display = "none";
+        }
+        var prefSel = document.getElementById("f-pref");
+        var citySel = document.getElementById("f-city");
+        var cityHint = document.getElementById("cityHint");
+        var submitBtn = document.getElementById("submitBtn");
+        var errSummary = document.getElementById("errSummary");
+        var errSummaryList = document.getElementById("errSummaryList");
+
+        /* 都道府県セレクトを構築 */
+        Object.keys(AREAS).forEach(function (pref) {
+          var opt = document.createElement("option");
+          opt.value = pref;
+          opt.textContent = pref;
+          prefSel.appendChild(opt);
+        });
+
+        /* 都道府県 → 市区町村の連動 */
+        prefSel.addEventListener("change", function () {
+          var pref = prefSel.value;
+          citySel.innerHTML = "";
+          var first = document.createElement("option");
+          first.value = "";
+          first.textContent = "市区町村を選択";
+          citySel.appendChild(first);
+          if (pref && AREAS[pref]) {
+            AREAS[pref].forEach(function (city) {
+              var opt = document.createElement("option");
+              opt.value = city;
+              opt.textContent = city;
+              citySel.appendChild(opt);
+            });
+            citySel.disabled = false;
+            cityHint.textContent = pref + "の募集エリアは " + AREAS[pref].length + " 件です。";
+          } else {
+            citySel.disabled = true;
+            cityHint.textContent = "先に都道府県を選んでください。";
+          }
+          clearError("pref");
+          clearError("city");
+        });
+        citySel.addEventListener("change", function () { clearError("city"); });
+
+        /* ---------- バリデーション ---------- */
+        function setError(key, msg, target) {
+          var errEl = document.getElementById("err-" + key);
+          if (errEl) { errEl.textContent = msg; errEl.classList.add("show"); }
+          if (target) {
+            target.classList.add("is-invalid");
+            target.setAttribute("aria-invalid", "true");
+          }
+        }
+        function clearError(key) {
+          var errEl = document.getElementById("err-" + key);
+          if (errEl) { errEl.textContent = ""; errEl.classList.remove("show"); }
+        }
+        function markGroupInvalid(id) {
+          var g = document.getElementById(id);
+          if (g) g.classList.add("group-invalid");
+        }
+        function unmarkGroup(id) {
+          var g = document.getElementById(id);
+          if (g) g.classList.remove("group-invalid");
+        }
+        function radioValue(name) {
+          var el = form.querySelector('input[name="' + name + '"]:checked');
+          return el ? el.value : "";
+        }
+
+        var ERR = {
+          nameEmpty: "お名前を入力してください。",
+          phoneEmpty: "電話番号を入力してください。",
+          phoneFormat: "電話番号の形式が正しくありません。0から始まる10〜11桁の数字で入力してください（ハイフンなしでも可）。",
+          emailEmpty: "メールアドレスを入力してください。",
+          emailFormat: "メールアドレスの形式が正しくありません。入力内容をご確認ください。",
+          prefEmpty: "都道府県を選択してください。",
+          cityEmpty: "市区町村を選択してください。",
+          ageEmpty: "年代を選択してください。",
+          statusEmpty: "現在の状況を選択してください。",
+          agreeEmpty: "個人情報の取り扱いへの同意が必要です。チェックをお願いします。"
+        };
+
+        function validateField(key) {
+          if (key === "name") {
+            var v = document.getElementById("f-name").value.trim();
+            var el = document.getElementById("f-name");
+            el.classList.remove("is-invalid");
+            if (!v) { setError("name", ERR.nameEmpty, el); return ERR.nameEmpty; }
+            clearError("name"); return null;
+          }
+          if (key === "phone") {
+            var raw = document.getElementById("f-phone").value.trim();
+            var pel = document.getElementById("f-phone");
+            pel.classList.remove("is-invalid");
+            if (!raw) { setError("phone", ERR.phoneEmpty, pel); return ERR.phoneEmpty; }
+            var digits = raw.replace(/[\s\-ー－]/g, "");
+            if (!/^0\d{9,10}$/.test(digits)) { setError("phone", ERR.phoneFormat, pel); return ERR.phoneFormat; }
+            clearError("phone"); return null;
+          }
+          if (key === "email") {
+            var ev = document.getElementById("f-email").value.trim();
+            var eel = document.getElementById("f-email");
+            eel.classList.remove("is-invalid");
+            if (!ev) { setError("email", ERR.emailEmpty, eel); return ERR.emailEmpty; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ev)) { setError("email", ERR.emailFormat, eel); return ERR.emailFormat; }
+            clearError("email"); return null;
+          }
+          if (key === "pref") {
+            prefSel.classList.remove("is-invalid");
+            if (!prefSel.value) { setError("pref", ERR.prefEmpty, prefSel); return ERR.prefEmpty; }
+            clearError("pref"); return null;
+          }
+          if (key === "city") {
+            citySel.classList.remove("is-invalid");
+            if (!citySel.value) { setError("city", ERR.cityEmpty, citySel); return ERR.cityEmpty; }
+            clearError("city"); return null;
+          }
+          if (key === "age") {
+            unmarkGroup("grp-age");
+            if (!radioValue("年代")) { setError("age", ERR.ageEmpty); markGroupInvalid("grp-age"); return ERR.ageEmpty; }
+            clearError("age"); return null;
+          }
+          if (key === "status") {
+            unmarkGroup("grp-status");
+            if (!radioValue("現在の状況")) { setError("status", ERR.statusEmpty); markGroupInvalid("grp-status"); return ERR.statusEmpty; }
+            clearError("status"); return null;
+          }
+          if (key === "agree") {
+            var box = document.getElementById("agreeBox");
+            box.classList.remove("agree-invalid");
+            if (!document.getElementById("f-agree").checked) {
+              setError("agree", ERR.agreeEmpty);
+              box.classList.add("agree-invalid");
+              return ERR.agreeEmpty;
+            }
+            clearError("agree"); return null;
+          }
+          return null;
+        }
+
+        var FOCUS_TARGET = {
+          name: "f-name", phone: "f-phone", email: "f-email",
+          pref: "f-pref", city: "f-city",
+          age: "grp-age", status: "grp-status", agree: "f-agree"
+        };
+
+        /* 入力中のリアルタイム再チェック（エラー表示中のみ） */
+        ["name", "phone", "email"].forEach(function (key) {
+          var el = document.getElementById("f-" + key);
+          el.addEventListener("blur", function () { validateField(key); });
+          el.addEventListener("input", function () {
+            if (document.getElementById("err-" + key).classList.contains("show")) validateField(key);
+          });
+        });
+        form.querySelectorAll('input[name="年代"]').forEach(function (r) {
+          r.addEventListener("change", function () { validateField("age"); });
+        });
+        form.querySelectorAll('input[name="現在の状況"]').forEach(function (r) {
+          r.addEventListener("change", function () { validateField("status"); });
+        });
+        document.getElementById("f-agree").addEventListener("change", function () { validateField("agree"); });
+
+        /* ---------- 送信 ---------- */
+        form.addEventListener("submit", function (e) {
+          var keys = ["name", "phone", "email", "pref", "city", "age", "status", "agree"];
+          var errors = [];
+          var firstBad = null;
+          keys.forEach(function (key) {
+            var msg = validateField(key);
+            if (msg) {
+              errors.push({ key: key, msg: msg });
+              if (!firstBad) firstBad = key;
+            }
+          });
+
+          errSummaryList.innerHTML = "";
+          if (errors.length) {
+            e.preventDefault();
+            errors.forEach(function (item) {
+              var li = document.createElement("li");
+              var btn = document.createElement("button");
+              btn.type = "button";
+              btn.textContent = item.msg;
+              btn.addEventListener("click", function () {
+                var t = document.getElementById(FOCUS_TARGET[item.key]);
+                if (t) { t.scrollIntoView({ behavior: "smooth", block: "center" }); }
+              });
+              li.appendChild(btn);
+              errSummaryList.appendChild(li);
+            });
+            errSummary.classList.add("show");
+            errSummary.scrollIntoView({ behavior: "smooth", block: "center" });
+            var firstEl = document.getElementById(FOCUS_TARGET[firstBad]);
+            if (firstEl && firstEl.focus) { try { firstEl.focus({ preventScroll: true }); } catch (_) { firstEl.focus(); } }
+            return;
+          }
+          errSummary.classList.remove("show");
+
+          /* バリデーションOK：件名を組み立てて hidden にセットし、
+             そのまま通常のフォームPOST（ページ遷移）で送信する */
+          document.getElementById("f-subject").value =
+            "【面接申込】" + document.getElementById("f-name").value.trim() + "（" + citySel.value + "）";
+        });
+
+        /* 完了画面から入力画面へ戻る */
+        document.getElementById("backBtn").addEventListener("click", function () {
+          document.getElementById("completeView").classList.remove("show");
+          document.getElementById("formView").style.display = "";
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      })();
+    </script>
+  </body>
+</html>
